@@ -1,0 +1,1076 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.top-controls {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.control-group {
+    background: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.control-group label {
+    font-weight: 600;
+    color: #333;
+}
+
+.control-group select,
+.control-group button {
+    padding: 8px 16px;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.control-group select:hover,
+.control-group button:hover {
+    background: #667eea;
+    color: white;
+}
+
+.allergen-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.modal-content h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.modal-content p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.allergen-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.allergen-list label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.allergen-list label:hover {
+    background: #e9ecef;
+}
+
+.allergen-list input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.modal-buttons button:first-child {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+.modal-buttons button:last-child {
+    background: #6c757d;
+    color: white;
+}
+
+.allergen-alert {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.food-item.allergen-warning {
+    border-color: #ff6b6b;
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+}
+
+.food-item.allergen-warning::after {
+    content: '⚠️';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 1rem;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.tab-btn.active {
+    background: white;
+    color: #667eea;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.food-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.filter-btn {
+    padding: 6px 12px;
+    border: 2px solid #667eea;
+    border-radius: 20px;
+    background: white;
+    color: #667eea;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.game-container {
+    display: grid;
+    grid-template-columns: 300px 1fr 350px;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.food-selection, .nutrition-panel {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.food-selection h2, .nutrition-panel h2, .history-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.food-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.food-item {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    cursor: grab;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+.food-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    border-color: #667eea;
+}
+
+.food-item:active {
+    cursor: grabbing;
+}
+
+.food-item .emoji {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.food-item .name {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.food-item .calories {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+.plate-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.plate-area h2 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.plate {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(145deg, #ffffff 0%, #e6e6e6 100%);
+    border-radius: 50%;
+    box-shadow: 
+        0 20px 60px rgba(0,0,0,0.3),
+        inset 0 5px 20px rgba(255,255,255,0.8),
+        inset 0 -5px 20px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.plate::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border: 3px solid #ddd;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.plate-section {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 2px dashed transparent;
+}
+
+.plate-section.drag-over {
+    background: rgba(102, 126, 234, 0.2);
+    border-color: #667eea;
+}
+
+.plate-section.grains {
+    width: 140px;
+    height: 140px;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 193, 7, 0.15);
+    border-radius: 50%;
+}
+
+.plate-section.vegetables {
+    width: 160px;
+    height: 160px;
+    top: 170px;
+    left: 30px;
+    background: rgba(76, 175, 80, 0.15);
+    border-radius: 20px;
+}
+
+.plate-section.fruits {
+    width: 140px;
+    height: 140px;
+    top: 180px;
+    right: 30px;
+    background: rgba(244, 67, 54, 0.15);
+    border-radius: 20px;
+}
+
+.plate-section.protein {
+    width: 180px;
+    height: 120px;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(33, 150, 243, 0.15);
+    border-radius: 20px;
+}
+
+.plate-section.dairy {
+    width: 100px;
+    height: 100px;
+    top: 100px;
+    right: 80px;
+    background: rgba(156, 39, 176, 0.15);
+    border-radius: 50%;
+}
+
+.plate-section span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.plate-food {
+    font-size: 1.5rem;
+    margin: 2px;
+    animation: dropIn 0.3s ease;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.plate-food:hover {
+    transform: scale(1.2);
+}
+
+.plate-food:active {
+    transform: scale(0.9);
+}
+
+@keyframes dropIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.plate-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+#clearPlate, #addToMeal {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+}
+
+#addToMeal {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+#clearPlate:hover, #addToMeal:hover {
+    transform: translateY(-2px);
+}
+
+.guideline-info {
+    background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+    padding: 10px 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    color: #00796b;
+    margin-bottom: 15px;
+}
+
+.nutrition-summary {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.score-display {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.score-label {
+    display: block;
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.score-value {
+    display: block;
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.nutrition-breakdown {
+    margin-bottom: 20px;
+}
+
+.nutrient-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.nutrient-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.nutrient-value {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.nutrient-bar {
+    width: 100%;
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.nutrient-progress {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.suggestions {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.suggestions h4 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.suggestions ul {
+    list-style: none;
+}
+
+.suggestions li {
+    padding: 8px 0;
+    color: #555;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.suggestions li:last-child {
+    border-bottom: none;
+}
+
+#saveScore {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#saveScore:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(56, 239, 125, 0.4);
+}
+
+.weekly-planner, .shopping-list-container {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+}
+
+.weekly-planner h2, .shopping-list-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.meal-selector {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.meal-selector label {
+    font-weight: 600;
+    color: #333;
+}
+
+.meal-selector select {
+    padding: 10px 20px;
+    border: 2px solid #667eea;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.weekly-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.day-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.day-card:hover {
+    border-color: #667eea;
+    transform: translateY(-3px);
+}
+
+.day-card h3 {
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.meal-slot {
+    margin-bottom: 15px;
+}
+
+.meal-slot h4 {
+    color: #667eea;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+.meal-slot .food-list {
+    min-height: 40px;
+    background: white;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.meal-slot .food-list span {
+    font-size: 1.2rem;
+    padding: 3px 6px;
+    background: #e3f2fd;
+    border-radius: 5px;
+}
+
+.meal-slot .food-list.empty::before {
+    content: '暂无食物';
+    color: #aaa;
+    font-size: 0.85rem;
+}
+
+.planner-actions, .shopping-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.planner-actions button, .shopping-actions button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#clearWeekly, #clearShoppingList {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+#generateShoppingList, #exportText, #exportCSV {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+#saveWeeklyPlan {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+.shopping-summary {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border-radius: 15px;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.summary-label {
+    color: #555;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.summary-value {
+    color: #2e7d32;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.shopping-list {
+    margin-bottom: 25px;
+}
+
+.shopping-category {
+    margin-bottom: 20px;
+}
+
+.shopping-category h4 {
+    color: #333;
+    margin-bottom: 10px;
+    padding: 8px 15px;
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+.shopping-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.shopping-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.shopping-item:hover {
+    background: #e9ecef;
+}
+
+.shopping-item.checked {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+.shopping-item .emoji {
+    font-size: 1.5rem;
+}
+
+.shopping-item .name {
+    flex: 1;
+    font-weight: 500;
+}
+
+.empty-list {
+    text-align: center;
+    color: #999;
+    padding: 40px;
+    font-size: 1.1rem;
+}
+
+.history-section {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.history-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.history-score {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.history-date {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.dragging {
+    opacity: 0.5;
+    transform: scale(1.1);
+}
+
+@media (max-width: 1200px) {
+    .game-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .plate {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+.test-panel {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+}
+
+.test-panel h2 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.test-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.test-controls button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 150px;
+}
+
+#runAllTests {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+#runQuickTest {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+#clearConsole {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.test-controls button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.test-results-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.summary-card {
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.summary-card.passed {
+    background: linear-gradient(135deg, #b8e994 0%, #78e08f 100%);
+}
+
+.summary-card.failed {
+    background: linear-gradient(135deg, #ffb8b8 0%, #ff7979 100%);
+}
+
+.summary-card.total {
+    background: linear-gradient(135deg, #82ccdd 0%, #60a3bc 100%);
+}
+
+.summary-card .number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+.summary-card .label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.test-output {
+    background: #1e272e;
+    border-radius: 15px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.test-output h3 {
+    color: #7bed9f;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.console-output {
+    background: #2d3436;
+    border-radius: 10px;
+    padding: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.console-output p {
+    color: #dfe6e9;
+    margin: 5px 0;
+}
+
+.console-output .welcome-text {
+    color: #74b9ff;
+    font-style: italic;
+}
+
+.console-output .test-pass {
+    color: #00b894;
+}
+
+.console-output .test-fail {
+    color: #d63031;
+}
+
+.console-output .test-group {
+    color: #fdcb6e;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.console-output .test-summary {
+    color: #e17055;
+    font-weight: bold;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #636e72;
+}
+
+@media (max-width: 768px) {
+    .plate {
+        width: 320px;
+        height: 320px;
+    }
+    
+    .plate-section {
+        transform: scale(0.8);
+    }
+    
+    .weekly-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .shopping-summary {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .test-results-summary {
+        grid-template-columns: 1fr;
+    }
+    
+    .test-controls {
+        flex-direction: column;
+    }
+    
+    .food-item .emoji {
+        font-size: 1.8rem;
+    }
+    
+    .plate-food {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .food-item .emoji {
+        font-size: 1.5rem;
+    }
+    
+    .plate-food {
+        font-size: 1rem;
+    }
+    
+    .food-item {
+        padding: 10px;
+    }
+    
+    .food-item .name {
+        font-size: 0.8rem;
+    }
+    
+    .food-item .calories {
+        font-size: 0.7rem;
+    }
+}

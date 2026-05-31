@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>营养膳食餐盘搭配 - 健康饮食小游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍽️ 营养膳食餐盘搭配</h1>
+            <p>拖拽食物到餐盘，搭配你的健康一餐！</p>
+        </header>
+
+        <div class="top-controls">
+            <div class="control-group">
+                <label>🌍 膳食指南:</label>
+                <select id="guidelineSelect">
+                    <option value="china">🇨🇳 中国居民膳食指南</option>
+                    <option value="usa">🇺🇸 美国膳食指南</option>
+                    <option value="japan">🇯🇵 日本膳食指南</option>
+                    <option value="mediterranean">🇬🇷 地中海饮食</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>⚠️ 过敏原:</label>
+                <button id="allergenBtn">设置过敏原</button>
+            </div>
+        </div>
+
+        <div class="allergen-modal" id="allergenModal" style="display: none;">
+            <div class="modal-content">
+                <h3>⚡ 过敏原设置</h3>
+                <p>勾选你需要避开的食物过敏原：</p>
+                <div class="allergen-list">
+                    <label><input type="checkbox" value="milk"> 🥛 牛奶/乳制品</label>
+                    <label><input type="checkbox" value="egg"> 🥚 鸡蛋</label>
+                    <label><input type="checkbox" value="nuts"> 🥜 坚果/花生</label>
+                    <label><input type="checkbox" value="wheat"> 🌾 小麦/麸质</label>
+                    <label><input type="checkbox" value="soy"> 🫘 大豆</label>
+                    <label><input type="checkbox" value="fish"> 🐟 鱼类</label>
+                    <label><input type="checkbox" value="shellfish"> 🦐 甲壳类/贝类</label>
+                    <label><input type="checkbox" value="sesame"> 🖤 芝麻</label>
+                    <label><input type="checkbox" value="mustard"> 🌭 芥末</label>
+                    <label><input type="checkbox" value="celery"> 🥬 芹菜</label>
+                    <label><input type="checkbox" value="lupin"> 🌱 羽扇豆</label>
+                    <label><input type="checkbox" value="molluscs"> 🐚 软体动物</label>
+                    <label><input type="checkbox" value="sulphites"> 🧂 亚硫酸盐</label>
+                </div>
+                <div class="modal-buttons">
+                    <button id="saveAllergens">保存设置</button>
+                    <button id="closeModal">关闭</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="allergen-alert" id="allergenAlert" style="display: none;">
+            <strong>⚠️ 过敏原警告!</strong>
+            <span id="allergenMessage"></span>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="game">🍽️ 餐盘搭配</button>
+            <button class="tab-btn" data-tab="weekly">📅 每周食谱</button>
+            <button class="tab-btn" data-tab="shopping">🛒 购物清单</button>
+            <button class="tab-btn" data-tab="tests">🧪 测试面板</button>
+        </div>
+
+        <div class="tab-content active" id="gameTab">
+            <div class="game-container">
+                <div class="food-selection">
+                    <h2>🥗 食物选择</h2>
+                    <div class="food-filter">
+                        <button class="filter-btn active" data-filter="all">全部</button>
+                        <button class="filter-btn" data-filter="grains">谷薯</button>
+                        <button class="filter-btn" data-filter="vegetables">蔬菜</button>
+                        <button class="filter-btn" data-filter="fruits">水果</button>
+                        <button class="filter-btn" data-filter="protein">蛋白</button>
+                        <button class="filter-btn" data-filter="dairy">奶豆</button>
+                    </div>
+                    <div class="food-items" id="foodItems">
+                    </div>
+                </div>
+
+                <div class="plate-area">
+                    <h2>🍱 你的餐盘</h2>
+                    <div class="plate" id="plate">
+                        <div class="plate-section grains" data-category="grains">
+                            <span>谷薯类</span>
+                        </div>
+                        <div class="plate-section vegetables" data-category="vegetables">
+                            <span>蔬菜类</span>
+                        </div>
+                        <div class="plate-section fruits" data-category="fruits">
+                            <span>水果类</span>
+                        </div>
+                        <div class="plate-section protein" data-category="protein">
+                            <span>蛋白质</span>
+                        </div>
+                        <div class="plate-section dairy" data-category="dairy">
+                            <span>奶豆类</span>
+                        </div>
+                    </div>
+                    <div class="plate-buttons">
+                        <button id="clearPlate">清空餐盘</button>
+                        <button id="addToMeal">添加到食谱</button>
+                    </div>
+                </div>
+
+                <div class="nutrition-panel">
+                    <h2>📊 营养评估</h2>
+                    <div class="guideline-info" id="guidelineInfo">
+                        🇨🇳 中国居民膳食指南 2022
+                    </div>
+                    <div class="nutrition-summary">
+                        <div class="score-display">
+                            <span class="score-label">均衡得分</span>
+                            <span class="score-value" id="score">0</span>
+                        </div>
+                    </div>
+                    <div class="nutrition-breakdown" id="nutritionBreakdown">
+                    </div>
+                    <div class="suggestions" id="suggestions">
+                        <p>开始搭配你的餐盘吧！</p>
+                    </div>
+                    <button id="saveScore">保存得分</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="weeklyTab">
+            <div class="weekly-planner">
+                <h2>📅 每周食谱计划</h2>
+                <div class="meal-selector">
+                    <label>选择餐次:</label>
+                    <select id="mealType">
+                        <option value="breakfast">🌅 早餐</option>
+                        <option value="lunch">☀️ 午餐</option>
+                        <option value="dinner">🌙 晚餐</option>
+                    </select>
+                    <select id="daySelect">
+                        <option value="monday">周一</option>
+                        <option value="tuesday">周二</option>
+                        <option value="wednesday">周三</option>
+                        <option value="thursday">周四</option>
+                        <option value="friday">周五</option>
+                        <option value="saturday">周六</option>
+                        <option value="sunday">周日</option>
+                    </select>
+                </div>
+                
+                <div class="weekly-grid" id="weeklyGrid">
+                </div>
+                
+                <div class="planner-actions">
+                    <button id="clearWeekly">清空一周食谱</button>
+                    <button id="generateShoppingList">生成购物清单</button>
+                    <button id="saveWeeklyPlan">保存食谱计划</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="shoppingTab">
+            <div class="shopping-list-container">
+                <h2>🛒 购物清单</h2>
+                <div class="shopping-summary">
+                    <div class="summary-item">
+                        <span class="summary-label">食物种类:</span>
+                        <span class="summary-value" id="itemCount">0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">预计总热量:</span>
+                        <span class="summary-value" id="totalCalories">0 kcal</span>
+                    </div>
+                </div>
+                <div class="shopping-list" id="shoppingList">
+                    <p class="empty-list">暂无购物清单，先去规划一周食谱吧！</p>
+                </div>
+                <div class="shopping-actions">
+                    <button id="exportText">导出为文本</button>
+                    <button id="exportCSV">导出为CSV</button>
+                    <button id="clearShoppingList">清空清单</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="testsTab">
+            <div class="test-panel">
+                <h2>🧪 测试面板</h2>
+                <div class="test-controls">
+                    <button id="runAllTests">🚀 运行全部测试</button>
+                    <button id="runQuickTest">⚡ 快速冒烟测试</button>
+                    <button id="clearConsole">🗑️ 清空控制台</button>
+                </div>
+                <div class="test-results-summary" id="testSummary">
+                    <div class="summary-card passed">
+                        <span class="number" id="passedCount">-</span>
+                        <span class="label">✅ 通过</span>
+                    </div>
+                    <div class="summary-card failed">
+                        <span class="number" id="failedCount">-</span>
+                        <span class="label">❌ 失败</span>
+                    </div>
+                    <div class="summary-card total">
+                        <span class="number" id="totalCount">-</span>
+                        <span class="label">📝 总计</span>
+                    </div>
+                </div>
+                <div class="test-output">
+                    <h3>📋 测试输出</h3>
+                    <div class="console-output" id="consoleOutput">
+                        <p class="welcome-text">点击上方按钮运行测试...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="history-section">
+            <h2>🏆 历史得分</h2>
+            <div class="history-list" id="historyList">
+                <p>暂无记录</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="tests.js"></script>
+</body>
+</html>
